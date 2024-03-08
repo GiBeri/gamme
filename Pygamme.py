@@ -20,11 +20,12 @@ def title_text():
     
     if score != 0: screen.blit(title_score,title_score_rectangle)
     else: screen.blit(title_words,title_words_rectangle)
+obtacle_speed = 5
 
 def obstacle_movement(obstacle_list):
     if obstacle_list:
         for obstacle_rectangle in obstacle_list:
-            obstacle_rectangle.x -= 5
+            obstacle_rectangle.x -= obtacle_speed 
 
             if obstacle_rectangle.bottom == 300: screen.blit(snail_surface,obstacle_rectangle)
             else:screen.blit(fly_surface,obstacle_rectangle)
@@ -174,6 +175,7 @@ while True:
 
         #collisions
         game_active = collisions(player_rectangle, obstacle_rectangle_list)
+        obtacle_speed += 0.001
     else:
         screen.fill((94,129,162))
         screen.blit(player_stand,player_stand_rectangle)
@@ -182,6 +184,8 @@ while True:
         obstacle_rectangle_list.clear()
         player_rectangle.y = 300
         player_gravity = 0
-        
+
+        obtacle_speed = 5
+
     pygame.display.update()
     clock.tick(60)

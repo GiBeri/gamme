@@ -2,18 +2,20 @@ import pygame
 from sys import exit
 
 def display_score():
-    current_time = pygame.time.get_ticks()//1000 - start_time
-    score_surface = test_font.render(f"Score: {current_time}", False, (64, 64, 64))
+    current_time = int(pygame.time.get_ticks()/1000) - start_time
+    score_surface = test_font.render(f"Score: {score}", False, (64, 64, 64))
     score_rectangle = score_surface.get_rect(center = (400, 50))
     screen.blit(score_surface, score_rectangle)
+    return current_time
 
 def title_text():
     title_game = test_font2.render(f"Gamme", False, (255,255,255))
     title_game_rectangle = title_game.get_rect(midbottom = player_stand_rectangle.midtop)
     screen.blit(title_game, title_game_rectangle)
-    title_score = test_font3.render(f"Score: {start_time}",False, (255,255,255))
+    title_score = test_font3.render(f"Score: {score}",False, (255,255,255))
     title_score_rectangle = title_score.get_rect(midtop = player_stand_rectangle.midbottom)
-    screen.blit(title_score,title_score_rectangle)
+    if score != 0:
+        screen.blit(title_score,title_score_rectangle)
     title_words = test_font.render(f"Press 'SPACE' to restart",False, (255,255,255))
     title_words_rectangle = title_words.get_rect(midtop = title_score_rectangle.midbottom)
     screen.blit(title_words,title_words_rectangle)
@@ -21,6 +23,8 @@ def title_text():
 pygame.init()
 
 game_active = False
+
+score = 0
 
 screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption("Gamme")
@@ -67,7 +71,7 @@ while True:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
                 snail_rectangle.left = 800
-                start_time = pygame.time.get_ticks()//1000
+                start_time = int(pygame.time.get_ticks()/1000)
         # if event.type == pygame.KEYUP:
         #    if event.key == pygame.K_SPACE:
     
@@ -77,7 +81,7 @@ while True:
         screen.blit(ground_surface,(0,300))
         # pygame.draw.rect(screen, "#c0e8ec", score_rectangle)
         # screen.blit(score_surface, score_rectangle)
-        display_score()
+        score = display_score()
 
         #snail
         snail_rectangle.left -= 5
